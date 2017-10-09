@@ -37,7 +37,7 @@ public class Drawings extends JPanel{
 		// Show pigeon
 		for (Pigeon pigeon : this.environnement.getPigeon()) {	
 			
-			g.drawImage(Pigeon.getImage(),pigeon.getPosition().x, pigeon.getPosition().y, offset, offset, this);			
+			g.drawImage(Pigeon.getImage(),pigeon.getPosition().x, pigeon.getPosition().y, offset, offset, this);
 		}
 	}
 }

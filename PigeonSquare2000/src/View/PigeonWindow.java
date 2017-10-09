@@ -61,12 +61,12 @@ public class PigeonWindow extends JFrame {
 		timer.start();
 		
 	}
-	
-	public static int getWidht() {
+
+	public static int getWidth_p() {
 		return Width;
 	}
-
-	public int getHeight() {
+	
+	public static int getHeight_p() {
 		return Height;
 	}
 }

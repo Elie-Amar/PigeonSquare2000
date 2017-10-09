@@ -31,7 +31,7 @@ public class Environnement extends Observable {
     	 this.pigeons =  new ArrayList<>();
          for (int i = 0; i < pigeonNumber; i++)
          {             
-        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidht()),Random(PigeonWindow.Height))));            
+        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p()))));            
          }
          
      }

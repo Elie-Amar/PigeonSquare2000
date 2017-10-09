@@ -25,16 +25,17 @@ public class Position implements Comparable<Position>{
 
      private Position positionHandler(int width, int height)
      {
-         if (this.x + width > PigeonWindow.getWidht())
+         if (this.x + width > PigeonWindow.getWidth_p())
          {
              this.x = this.x - width;
          }
-         if (this.y + height > PigeonWindow.Height)
+         if (this.y + height > PigeonWindow.getHeight_p())
          {
              this.y = this.y - height;
          }
          return new Position(x,y);
      }
+     
      public Position positionHandler(Size size)
      {
         return positionHandler(size.width, size.height);
