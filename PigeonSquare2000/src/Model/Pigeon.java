@@ -122,22 +122,6 @@ public class Pigeon implements Runnable
         }	
    
         private void runAway(){
-<<<<<<< HEAD
-        	 double angle = changeAngle();
-        	 this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
-             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
-             this.position =  this.position.positionHandler(size);
-          //  this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
-            //this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
-        }
-        
-        private double changeAngle() {
-        	double angle = Coord.computeAngle(this.position, antiTargetHuman.getPosition());
-        	
-        	if(changeAngle) {
-        		Random random = new Random();
-            	double randomAngle = ((double)random.nextInt(314) / 100) - 1.57;
-
         	if(!hasLaunchedTimer && !changeAngle) {
         		Timer timer = new Timer(500, action -> {
 					changeAngle = true;
