@@ -5,40 +5,52 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
 import Helper.Position;
 
 public class Food {
 	
 	 private Position position;
-     private boolean isEaten;
      private boolean isFresh;
+     private boolean toBeDeleted;
      private int width;
      private int height;
-     static ImageIcon image =  new ImageIcon("assets/food_60.png");
+     static ImageIcon fresh =  new ImageIcon("assets/food_60.png");
+     static ImageIcon rotten = new ImageIcon("assets/rottenness_60.png");
     
 
      public Food(Position _position)
      {
          this.position = _position;        
-         this.isEaten = false;
+         this.toBeDeleted = false;
          this.isFresh = true;
-         this.width = image.getIconWidth();
-         this.height = image.getIconHeight();
+         this.width = fresh.getIconWidth();
+         this.height = fresh.getIconHeight();
+         Timer timer1 = new Timer(5000, action -> {
+				if(isFresh) {
+					hasRotted();
+				}
+			});
+	timer1.start();
      }
      
      public Food()
      {        
-         this.isEaten = false;
+         this.toBeDeleted = false;
          this.isFresh = true;
-         this.width = image.getIconWidth();
-         this.height = image.getIconHeight();       
+         this.width = fresh.getIconWidth();
+         this.height = fresh.getIconHeight();       
      }
 
 
      public boolean Fresh()
      {
          return isFresh;
+     }
+     
+     public boolean needsToBeDeleted() {
+    	 return toBeDeleted;
      }
 
      public Position getPosition()
@@ -63,13 +75,27 @@ public class Food {
     	 return height;
      }
      
-     public void eaten()
-     {
-         isEaten = true; 
+     private void hasRotted() {
+    	 isFresh = false;
+    	 Timer timer2 = new Timer(5000, action -> {
+    		 if(!toBeDeleted) {
+    			 toDelete();
+    		 }
+    	 });
+    	 timer2.start();
      }
      
-     public static Image getImage() 
+	private void toDelete() {
+		toBeDeleted = true;
+	}
+	
+     public Image getImage() 
      {
-    	return image.getImage();
+    	if(isFresh) {
+    		return fresh.getImage();
+    	}
+    	else {
+    		return rotten.getImage();
+    	}
      }
 }

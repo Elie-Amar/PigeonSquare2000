@@ -26,17 +26,20 @@ public class Drawings extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);		
-				
+		this.environnement.destroyFoods();		
 		//Show food
-		for (Food food : this.environnement.getFood()) {
-			if (food.Fresh()) {
+		Environnement.foodLock.readLock().lock();
+    	try {
+    		for (Food food : this.environnement.getFood()) {
 				int x = food.getPosition().getXInt() - food.getWidth()/2;
 			    int y = food.getPosition().getYInt() - food.getHeight()/2;
-				g.drawImage(Food.getImage(), x, y, this);
-				
-			}
-		}
-
+				g.drawImage(food.getImage(), x, y, this);		
+    		}
+    	}
+    	finally {
+    		Environnement.foodLock.readLock().unlock();
+    	}
+		
 		// Show pigeon
 		for (Pigeon pigeon : this.environnement.getPigeon()) {	
 			int x = pigeon.getPosition().getXInt() - 40;
