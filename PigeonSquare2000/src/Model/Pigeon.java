@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
-import Helper.Maths;
+import Helper.Coord;
 import Helper.Position;
 import Helper.Size;
 
@@ -66,7 +66,7 @@ public class Pigeon implements Runnable
 	    				//MoveToFood();
 	    				move();    				
 	    				
-	    				if (Maths.computeDistance(position, targetFood.getPosition()) < 1) 
+	    				if (Coord.computeDistance(position, targetFood.getPosition()) < 5) 
 	    					 this.environnement.eatFood(targetFood);       			             
 	    			}
             	}
@@ -94,19 +94,23 @@ public class Pigeon implements Runnable
         
 
         private void move(){
-            double angle = Maths.computeAngle(this.position, targetFood.getPosition());
+            double angle = Coord.computeAngle(this.position, targetFood.getPosition());            
             this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
-        }
+            this.position =  this.position.positionHandler(size);
+        }	
    
         private void runAway(){
         	double angle = changeAngle();
-            this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
-            this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
+        	 this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
+             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
+             this.position =  this.position.positionHandler(size);
+          //  this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
+            //this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
         }
         
         private double changeAngle() {
-        	double angle = Maths.computeAngle(this.position, antiTargetHuman.getPosition());
+        	double angle = Coord.computeAngle(this.position, antiTargetHuman.getPosition());
         	/*
         	if(changeAngle) {
         		Random random = new Random();
@@ -118,6 +122,7 @@ public class Pigeon implements Runnable
         	}
         	return angle;
         	*/
+        	return 0.0;
         }
         
         public Position getPosition()

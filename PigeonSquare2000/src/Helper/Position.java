@@ -73,6 +73,7 @@ public class Position implements Comparable<Position>{
     	 return this.x == p.x && this.y == p.y; 		
  		
  	}
+    
 
 	@Override
 	public int compareTo(Position p) {

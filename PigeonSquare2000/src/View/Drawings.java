@@ -26,7 +26,7 @@ public class Drawings extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);		
-		this.environnement.destroyFoods();		
+		this.environnement.clean();		
 		this.environnement.generateHuman();
 		//Show food
 		Environnement.foodLock.readLock().lock();
