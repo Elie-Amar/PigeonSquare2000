@@ -17,8 +17,7 @@ public class Pigeon implements Runnable
       private Size size;
       public static ImageIcon image =  new ImageIcon("assets/pigeon_80.png");
       private Environnement environnement;
-      private static final double MAX_STEP_MOVE = 0.5;
-      double angle =0;
+      private static final double MAX_STEP_MOVE = 0.5;      
       private int refreshTime;
       int number;
       
@@ -37,7 +36,7 @@ public class Pigeon implements Runnable
             isHungry = true;
             Alive = true;
             this.environnement = _environnement;
-            this.refreshTime = (int) (1. / 25. * 100.);
+            this.refreshTime = 4;
             this.number = number;
             //Console.WriteLine("Pigeon created at " + position.x + " " + position.y);
             
@@ -79,7 +78,7 @@ public class Pigeon implements Runnable
         }
 
         private void move(){
-            angle = Maths.computeAngle(this.position, targetFood.getPosition());
+            double angle = Maths.computeAngle(this.position, targetFood.getPosition());
             this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
         }

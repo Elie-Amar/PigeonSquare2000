@@ -25,6 +25,7 @@ public class Food {
          this.isFresh = true;
          this.width = image.getIconWidth();
          this.height = image.getIconHeight();
+        
      }
      
      public Food()
