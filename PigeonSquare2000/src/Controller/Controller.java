@@ -30,8 +30,8 @@ public class Controller extends MouseAdapter  {
 		}		
 		
 		if(SwingUtilities.isMiddleMouseButton(e)) {
-			Pigeon f = new Pigeon(new Position(x,y));
-			environnement.addPigeon(f);
+			Pigeon p = new Pigeon(new Position(x,y));
+			environnement.addPigeon(p);
 		}
 		
 

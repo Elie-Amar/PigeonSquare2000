@@ -202,7 +202,7 @@ public class Environnement extends Observable {
 									Random(PigeonWindow.getHeight_p())
 									)
     						)
-    				oogel);
+    				);
     	
     	
     	
