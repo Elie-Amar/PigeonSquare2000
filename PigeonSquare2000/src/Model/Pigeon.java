@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
 import Helper.Maths;
 import Helper.Position;
@@ -16,6 +17,7 @@ public class Pigeon implements Runnable
       private boolean isAfraid;
       private boolean Alive;
       private boolean changeAngle;
+      private boolean hasLaunchedTimer;
       private Food targetFood;
       private Human antiTargetHuman;
       private Size size;
@@ -23,8 +25,10 @@ public class Pigeon implements Runnable
       private Environnement environnement;
       private static final double MAX_STEP_MOVE = 0.5;      
       private int refreshTime;
-      int number;
-      double pi = Math.PI;
+      private int number;
+      private double pi = Math.PI;
+      private double angle;
+      private double previousAngle;
       
         
         public Pigeon()
@@ -40,7 +44,8 @@ public class Pigeon implements Runnable
             isAfraid = false;
             isHungry = true;
             Alive = true;
-            changeAngle = false;
+            changeAngle = true;
+            hasLaunchedTimer = false;
             this.environnement = _environnement;
             this.refreshTime = 4;
             this.number = number;
@@ -94,31 +99,39 @@ public class Pigeon implements Runnable
         
 
         private void move(){
-            double angle = Maths.computeAngle(this.position, targetFood.getPosition());
+            this.angle = Maths.computeAngle(this.position, targetFood.getPosition());
             this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
         }
    
         private void runAway(){
-        	double angle = changeAngle();
+        	if(!hasLaunchedTimer && !changeAngle) {
+        		Timer timer = new Timer(500, action -> {
+					changeAngle = true;
+					hasLaunchedTimer = false;
+				});
+        		hasLaunchedTimer = true;
+        		System.out.println("launched timer");
+        		timer.start();
+        	}
+            if(!changeAngle) {
+            	angle = previousAngle;
+            }
+            else {
+            	angle = Maths.computeAngle(this.position, antiTargetHuman.getPosition());
+            	Random random = new Random();
+            	double randomAngle = ((double)random.nextInt(157) / 100) - 0.78;
+                angle += randomAngle;
+                previousAngle = angle;
+                changeAngle = false;
+                System.out.println("final angle = " + angle);
+            }
+            //System.out.println("final angle = " + angle);
             this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
         }
         
-        private double changeAngle() {
-        	double angle = Maths.computeAngle(this.position, antiTargetHuman.getPosition());
-        	/*
-        	if(changeAngle) {
-        		Random random = new Random();
-            	double randomAngle = ((double)random.nextInt(314) / 100) - 1.57;
-                angle += randomAngle;
-                System.out.println(randomAngle + " " + angle);
-                changeAngle = false;
-                //timer 500 -> changeAngle = true;
-        	}
-        	return angle;
-        	*/
-        }
+        
         
         public Position getPosition()
         {
