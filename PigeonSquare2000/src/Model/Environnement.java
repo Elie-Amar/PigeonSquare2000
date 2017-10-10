@@ -203,13 +203,20 @@ public class Environnement extends Observable {
     	return humans.size() != 0;    	                   
     }
     
-    public boolean closeToHuman(Pigeon p) {  	
-    	 for(Human human : humans) {
-    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
-				if (dist < 300) {
-					return true;
-				}
- 	    	} 		  		   
+    public boolean closeToHuman(Pigeon p) {  
+    	
+    	 HumanLock.readLock().lock();
+    	 try {
+	    	 for(Human human : humans)
+	    	 {
+	    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
+					if (dist < 300) {
+						return true;
+					}
+	 	     } 		  		  
+    	 } finally {
+  	    	HumanLock.readLock().unlock();
+  		}  
     	
     	return false;                 
     }

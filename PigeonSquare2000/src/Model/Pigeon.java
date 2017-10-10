@@ -7,13 +7,15 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import Helper.Coord;
+import Helper.HitBox;
 import Helper.Position;
 import Helper.Size;
+import View.PigeonWindow;
+
 
 public class Pigeon implements Runnable
     {
-	  private boolean isHungry;
-      private Position position;
+	  private Position position;
       private boolean isAfraid;
       private boolean Alive;
       private boolean changeAngle;
@@ -25,10 +27,10 @@ public class Pigeon implements Runnable
       private Environnement environnement;
       private static final double MAX_STEP_MOVE = 0.5;      
       private int refreshTime;
-      private int number;
-      private double pi = Math.PI;
+      private int number;      
       private double angle;
       private double previousAngle;
+      private HitBox hitbox;
       
         
         public Pigeon()
@@ -39,10 +41,10 @@ public class Pigeon implements Runnable
         public Pigeon(Position _position, Environnement _environnement, int number)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
-            this.position = _position.positionHandler(size);  
+            this.position = _position.positionHandler(size);
+            this.hitbox = new HitBox(position, size);
         	//this.position = _position;
-            isAfraid = false;
-            isHungry = true;
+            isAfraid = false;          
             Alive = true;
             changeAngle = true;
             hasLaunchedTimer = false;
@@ -77,7 +79,8 @@ public class Pigeon implements Runnable
             	}
             	else {
             		this.antiTargetHuman = this.environnement.getNearestHuman(this);
-            		runAway();
+            		if(antiTargetHuman!= null)
+            			runAway();
             	}        	
             	try {
     				Thread.sleep(refreshTime);
@@ -99,10 +102,14 @@ public class Pigeon implements Runnable
         
 
         private void move(){
-            this.angle = Maths.computeAngle(this.position, targetFood.getPosition());
-            this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
-            this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
-            this.position =  this.position.positionHandler(size);
+            this.angle = Coord.computeAngle(this.position, targetFood.getPosition());
+            double nextX = MAX_STEP_MOVE * Math.cos(angle);
+            double nextY = MAX_STEP_MOVE * Math.sin(angle);
+            
+            this.position.x += nextX;
+            this.position.y += nextY;           
+        
+    		
         }	
    
         private void runAway(){
@@ -119,7 +126,7 @@ public class Pigeon implements Runnable
             	angle = previousAngle;
             }
             else {
-            	angle = Maths.computeAngle(this.position, antiTargetHuman.getPosition());
+            	angle = Coord.computeAngle(this.position, antiTargetHuman.getPosition());
             	Random random = new Random();
             	double randomAngle = ((double)random.nextInt(157) / 100) - 0.78;
                 angle += randomAngle;
@@ -130,6 +137,7 @@ public class Pigeon implements Runnable
             //System.out.println("final angle = " + angle);
             this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
+           //this.position =  this.position.positionHandler(size);
         }
                 
         
