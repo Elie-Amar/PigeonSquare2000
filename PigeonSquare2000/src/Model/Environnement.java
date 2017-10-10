@@ -15,6 +15,7 @@ public class Environnement extends Observable {
 	 int pigeonNumber = 6;
 	 private ArrayList<Food> foods;
 	 private ArrayList<Pigeon> pigeons;
+	 private ArrayList<Human> humans;
 	 private Random random = new Random();
 	 public static final ReadWriteLock foodLock = new ReentrantReadWriteLock(true); 
 	
@@ -29,23 +30,27 @@ public class Environnement extends Observable {
      {               
     	 this.foods = new ArrayList<>();
     	 this.pigeons =  new ArrayList<>();
+    	 this.humans =  new ArrayList<>();
          for (int i = 0; i < pigeonNumber; i++)
          {             
         	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())), this, i));            
          }
-        
+         
      }
      public void addFood(Food food)
      {
-    	 Environnement.foodLock.writeLock().lock();
+    	Environnement.foodLock.writeLock().lock();
  		try {
  			this.foods.add(food);
  		} finally {
  			Environnement.foodLock.writeLock().unlock();
- 		}
-
-    	
+ 		}  	
      }     
+     
+     public void addHuman(Human human)
+     {
+ 		this.humans.add(human);
+     }  
      
      public void StartPigeonThread() {
     		for(Pigeon p : pigeons) 
@@ -66,6 +71,9 @@ public class Environnement extends Observable {
 	
 	public ArrayList<Pigeon> getPigeon() {
 		return pigeons;
+	}
+	public ArrayList<Human> getHuman() {
+		return humans;
 	}
 	
     public int Random(int n) { return random.nextInt(n); }
@@ -101,6 +109,20 @@ public class Environnement extends Observable {
         return food;  		
 	}
     
+
+    public Human getNearestHuman(Pigeon p) {
+    	Human human = null;
+	    double min = Double.POSITIVE_INFINITY;
+		for (Human h : humans) {
+			double dist = Maths.computeDistance(p.getPosition(), h.getPosition());
+			if (dist < min) {
+				min = dist;
+				human = h;
+			}
+		}
+        return human;  
+    }
+    
     public void destroyFoods() {
     	ArrayList<Food> foodToRemove = new ArrayList<Food>();
     	 foodLock.readLock().lock();
@@ -127,5 +149,34 @@ public class Environnement extends Observable {
     }	
 
 	
+    public void generateHuman() {
+    	//Créer un nombre aléatoire    	
+    	int occurence = Random(1000);
+    	int probability = Random(5);
+    	//System.out.println(occurence + " " + probability);	
+    	 if(occurence<probability)    	
+    		humans.add(new Human(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p()))));
+    	
+    	
+    	
+    	//Thread.sleep(10000 / speed); //10s/speed to avoid afraid bool to change to frequently
+    	                   
+    }
+    
+    public boolean isThereHuman() {
+    	return humans.size() != 0;    	                   
+    }
+    
+    public boolean closeToHuman(Pigeon p) {  	
+    	 for(Human human : humans) {
+    		 double dist = Maths.computeDistance(p.getPosition(), human.getPosition());
+				if (dist < 300) {
+					return true;
+				}
+ 	    	} 		  		   
+    	
+    	return false;                 
+    }
+    
 	
 }

@@ -27,6 +27,7 @@ public class Drawings extends JPanel{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);		
 		this.environnement.destroyFoods();		
+		this.environnement.generateHuman();
 		//Show food
 		Environnement.foodLock.readLock().lock();
     	try {
@@ -45,6 +46,12 @@ public class Drawings extends JPanel{
 			int x = pigeon.getPosition().getXInt() - 40;
 		    int y = pigeon.getPosition().getYInt() - 40;
 		    g.drawImage(Pigeon.getImage(),x, y, this);
+		}
+		
+		for (Human human : this.environnement.getHuman()) {	
+			int x = human.getPosition().getXInt() - 40;
+		    int y = human.getPosition().getYInt() - 40;
+		    g.drawImage(human.getImage(),x, y, this);
 		}
 	}
 }

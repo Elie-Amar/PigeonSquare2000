@@ -30,11 +30,14 @@ public class Controller extends MouseAdapter  {
 					(int) (e.getX() - 50),
 					(int) (e.getY() - 80)
 					)); */
-		Food f = new Food(new Position(x, y));
-		environnement.addFood(f);
+		//Food f = new Food(new Position(x, y));
+		//environnement.addFood(f);
 		
 		//Pigeon f = new Pigeon(new Position(e.getX()-12,e.getY()-52));
 		//environnement.addPigeon(f);
+		
+		Human h = new Human(new Position(x, y));
+		environnement.addHuman(h);
 
 		
 	}
