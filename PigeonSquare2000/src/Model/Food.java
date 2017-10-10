@@ -16,11 +16,11 @@ public class Food {
      private int width;
      private int height;
      static ImageIcon image =  new ImageIcon("assets/food_60.png");
+    
 
      public Food(Position _position)
      {
-         this.position = _position;
-        //System.out.println("Foodcreated at " + position.x+ " " + position.y);
+         this.position = _position;        
          this.isEaten = false;
          this.isFresh = true;
          this.width = image.getIconWidth();
@@ -28,16 +28,13 @@ public class Food {
      }
      
      public Food()
-     {
-        //System.out.println("Foodcreated at " + position.x+ " " + position.y);
+     {        
          this.isEaten = false;
          this.isFresh = true;
          this.width = image.getIconWidth();
-         this.height = image.getIconHeight();
-         //System.out.println(Integer.toString(width) + "  " + Integer.toString(height));
+         this.height = image.getIconHeight();       
      }
 
- 
 
      public boolean Fresh()
      {
@@ -69,11 +66,10 @@ public class Food {
      public void eaten()
      {
          isEaten = true; 
-
      }
      
      public static Image getImage() 
      {
-    	 return image.getImage();
+    	return image.getImage();
      }
 }

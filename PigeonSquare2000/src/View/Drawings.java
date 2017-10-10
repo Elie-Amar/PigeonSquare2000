@@ -33,6 +33,7 @@ public class Drawings extends JPanel{
 				int x = food.getPosition().getXInt() - food.getWidth()/2;
 			    int y = food.getPosition().getYInt() - food.getHeight()/2;
 				g.drawImage(Food.getImage(), x, y, this);
+				
 			}
 		}
 
@@ -40,8 +41,7 @@ public class Drawings extends JPanel{
 		for (Pigeon pigeon : this.environnement.getPigeon()) {	
 			int x = pigeon.getPosition().getXInt() - 40;
 		    int y = pigeon.getPosition().getYInt() - 40;
-		    //System.out.println(Food.getImage().getWidth(null) + " " + Food.getImage().getHeight(null));
-			g.drawImage(Pigeon.getImage(),x, y, this);
+		    g.drawImage(Pigeon.getImage(),x, y, this);
 		}
 	}
 }
