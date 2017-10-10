@@ -17,7 +17,7 @@ public class Pigeon implements Runnable
         private Food targetFood;
         private Thread thread;
         private Size size;
-        public static ImageIcon image =  new ImageIcon("assets/pigeon.png");
+        public static ImageIcon image =  new ImageIcon("assets/pigeon_80.png");
         
         public Pigeon()
         {
@@ -27,6 +27,7 @@ public class Pigeon implements Runnable
         public Pigeon(Position _position)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
+        	System.out.println("p:" +  image.getIconWidth() + " " + image.getIconHeight());
             this.position = _position.positionHandler(size);  
         	//this.position = _position;
             isAfraid = false;
@@ -36,13 +37,10 @@ public class Pigeon implements Runnable
             
         }
 
-        
-
         public void Start()
         {
           
         }
-
 
         @Override
         public void run()

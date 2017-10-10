@@ -15,6 +15,7 @@ public class Position implements Comparable<Position>{
          this.x = _x;
          this.y = _y;
      }
+     
 
      public Position(int _x, int _y, Size size)
      {
@@ -25,13 +26,24 @@ public class Position implements Comparable<Position>{
 
      private Position positionHandler(int width, int height)
      {
-         if (this.x + width > PigeonWindow.getWidth_p())
+    	 int eastLimit = PigeonWindow.getWidth_p() - PigeonWindow.border;
+    	 int southLimit = PigeonWindow.getHeight_p() - PigeonWindow.border - height;
+    	 int westLimit = PigeonWindow.border + width;
+    	 int northLimit = PigeonWindow.border + height; 
+    	 
+         if (this.x + width > eastLimit)
          {
-             this.x = this.x - width;
+             this.x = PigeonWindow.getWidth_p() - width;
          }
-         if (this.y + height > PigeonWindow.getHeight_p())
+         if (this.y + height > southLimit)
          {
-             this.y = this.y - height;
+             this.y = PigeonWindow.getHeight_p() - height - height/2;
+         }
+         if(this.x + width/2 < westLimit) {
+        	 this.x = width/2;
+         }
+         if(this.y + height/2 < northLimit) {
+        	 this.y = height/2;
          }
          return new Position(x,y);
      }

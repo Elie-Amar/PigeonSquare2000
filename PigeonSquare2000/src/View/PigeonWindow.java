@@ -15,8 +15,9 @@ public class PigeonWindow extends JFrame {
 
 	private JPanel contentPane;
 	private Environnement environnement;
-	private static int Width = 1200; 
-	public static int Height = 800; 
+	public static int Width = 1800; 
+	public static int Height = 1000; 
+	public static int border = 8;
 	
 	
 	/**
@@ -29,9 +30,7 @@ public class PigeonWindow extends JFrame {
 		} catch (Exception e) {
 				e.printStackTrace();
 		}
-	}
-			
-				
+	}			
 
 	/**
 	 * Create the frame.
@@ -39,21 +38,23 @@ public class PigeonWindow extends JFrame {
 	public PigeonWindow() {
 		
 		this.environnement = new Environnement() ;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, Width, Height);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		init();
+		contentPane.setBorder(new EmptyBorder(border, border, border, border));
+		contentPane.setLayout(new BorderLayout(0, 0));			
+		setTitle("Pigeon Area");
+	    setLocationRelativeTo(null);               
+	    setContentPane(contentPane);               
+	    
+	    init();
 				
 	}
 	
 	
 	public void init() {
 		
-		this.add(new Drawings(environnement));
+		this.contentPane.add(new Drawings(environnement));
 		this.addMouseListener(new Controller(environnement));
 		Timer timer = new Timer(30, action -> {
 					this.repaint();
