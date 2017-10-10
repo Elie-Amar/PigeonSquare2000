@@ -5,9 +5,9 @@ import static java.lang.Math.*;
 public class Maths {
 
 	
-	 public static int computeDistance(Position start, Position end)
+	 public static double computeDistance(Position start, Position end)
      {
-		 return  (int) sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2));
+		 return  sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2));
      }	
 	 
 	 public static double computeAngle(Position start, Position end){
