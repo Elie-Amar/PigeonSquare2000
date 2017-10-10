@@ -27,7 +27,7 @@ public class Pigeon implements Runnable
         public Pigeon(Position _position)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
-        	System.out.println("p:" +  image.getIconWidth() + " " + image.getIconHeight());
+        	//System.out.println("p:" +  image.getIconWidth() + " " + image.getIconHeight());
             this.position = _position.positionHandler(size);  
         	//this.position = _position;
             isAfraid = false;
