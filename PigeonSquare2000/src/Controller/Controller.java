@@ -3,6 +3,8 @@ package Controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.SwingUtilities;
+
 import Model.*;
 import Helper.*;
 
@@ -21,24 +23,21 @@ public class Controller extends MouseAdapter  {
 		int x = e.getX() - 12;
 		int y = e.getY() - 52;
 		System.out.println("e: " + x + " " + y);
-		
-		
-		/*
-		Food f = new Food();
-		f.setPosition(
-				new Position(
-					(int) (e.getX() - 50),
-					(int) (e.getY() - 80)
-					)); */
-		Food f = new Food(new Position(x, y));
-		environnement.addFood(f);
-		
-		//Pigeon f = new Pigeon(new Position(e.getX()-12,e.getY()-52));
-		//environnement.addPigeon(f);
-		
-	//	Human h = new Human(new Position(x, y));
-		//environnement.addHuman(h);
 
+		if(SwingUtilities.isLeftMouseButton(e)) {
+			Food f = new Food(new Position(x, y));
+			environnement.addFood(f);
+		}		
 		
+		if(SwingUtilities.isMiddleMouseButton(e)) {
+			Pigeon f = new Pigeon(new Position(x,y));
+			environnement.addPigeon(f);
+		}
+		
+
+		if(SwingUtilities.isRightMouseButton(e)) {
+			Human h = new Human(new Position(x, y));
+			environnement.addHuman(h);
+		}
 	}
 }

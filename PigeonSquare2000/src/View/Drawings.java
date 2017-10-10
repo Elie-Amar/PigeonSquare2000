@@ -32,8 +32,8 @@ public class Drawings extends JPanel{
 		Environnement.foodLock.readLock().lock();
     	try {
     		for (Food food : this.environnement.getFood()) {
-				int x = food.getPosition().getXInt() - food.getWidth()/2;
-			    int y = food.getPosition().getYInt() - food.getHeight()/2;
+				int x = food.getPosition().getXInt() - food.getSize().width/2;
+			    int y = food.getPosition().getYInt() - food.getSize().height/2;
 				g.drawImage(food.getImage(), x, y, this);		
     		}
     	}
@@ -43,14 +43,15 @@ public class Drawings extends JPanel{
 		
 		// Show pigeon
 		for (Pigeon pigeon : this.environnement.getPigeon()) {	
-			int x = pigeon.getPosition().getXInt() - 40;
-		    int y = pigeon.getPosition().getYInt() - 40;
+			int x = pigeon.getPosition().getXInt() - pigeon.getSize().width/2;
+		    int y = pigeon.getPosition().getYInt() - pigeon.getSize().height/2;
 		    g.drawImage(Pigeon.getImage(),x, y, this);
 		}
 		
 		for (Human human : this.environnement.getHuman()) {	
-			int x = human.getPosition().getXInt() - 40;
-		    int y = human.getPosition().getYInt() - 40;
+			int x = human.getPosition().getXInt() - human.getSize().width/2;
+		    int y = human.getPosition().getYInt() - human.getSize().height/2;
+		    //System.out.println("human :" + human.getSize().width/2 + " " + human.getSize().height/2);
 		    g.drawImage(human.getImage(),x, y, this);
 		}
 	}

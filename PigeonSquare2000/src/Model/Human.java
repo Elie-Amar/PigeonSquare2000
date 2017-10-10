@@ -35,6 +35,15 @@ public class Human implements Runnable{
 		t.start();
 	}
 	
+	// for debug only	
+	public Human(Position _position) {
+		this.caracter = Caracter.getCaracter(Random(4));
+		this.image = Caracter.getImage(caracter);
+		this.size = new Size(image.getIconWidth(), image.getIconHeight());
+        this.position = _position.positionHandler(size); 
+        this.Alive = true;
+	}
+	
 	@Override
 	public void run() {
 		while(Alive) {
@@ -56,6 +65,10 @@ public class Human implements Runnable{
     
     public Image getImage() {
     	return image.getImage();
+    }
+    
+    public Size getSize(){
+    	return this.size;
     }
     
 

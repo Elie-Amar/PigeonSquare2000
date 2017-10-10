@@ -191,7 +191,18 @@ public class Environnement extends Observable {
     	int probability = Random(5);
     	//System.out.println(occurence + " " + probability);	
     	 if(occurence<probability)    	
-    		humans.add(new Human(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())),new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p()) )));
+    		humans.add(
+    				new Human(
+    						new Position(
+    								Random(PigeonWindow.getWidth_p()),
+    								Random(PigeonWindow.getHeight_p())
+    								),
+    						new Position(
+									Random(PigeonWindow.getWidth_p()),
+									Random(PigeonWindow.getHeight_p())
+									)
+    						)
+    				oogel);
     	
     	
     	
@@ -203,13 +214,20 @@ public class Environnement extends Observable {
     	return humans.size() != 0;    	                   
     }
     
-    public boolean closeToHuman(Pigeon p) {  	
-    	 for(Human human : humans) {
-    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
-				if (dist < 300) {
-					return true;
-				}
- 	    	} 		  		   
+    public boolean closeToHuman(Pigeon p) {  
+    	
+    	 HumanLock.readLock().lock();
+    	 try {
+	    	 for(Human human : humans)
+	    	 {
+	    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
+					if (dist < 300) {
+						return true;
+					}
+	 	     } 		  		  
+    	 } finally {
+  	    	HumanLock.readLock().unlock();
+  		}  
     	
     	return false;                 
     }

@@ -24,11 +24,11 @@ public class Food {
  
      public Food(Position _position)
      {
-    	 this.position = _position;
+    	 this.size = new Size(fresh.getIconWidth(), fresh.getIconHeight());
+    	 this.position = _position.positionHandler(size);
          this.toBeDeleted = false;
          this.isFresh = true;
-         this.width = fresh.getIconWidth();
-         this.height = fresh.getIconHeight();
+         
          Timer timer1 = new Timer(5000, action -> {
                 if(isFresh) {
                     hasRotted();
@@ -69,16 +69,13 @@ public class Food {
          this.position.y = _y;
      }
  
-     public int getWidth() {
-         return width;
-     }
-     
-     public int getHeight() {
-         return height;
+     public Size getSize(){
+     	return this.size;
      }
      
      private void hasRotted() {
          isFresh = false;
+         this.size.setSize(rotten.getIconWidth(), rotten.getIconHeight());
          Timer timer2 = new Timer(5000, action -> {
              if(!toBeDeleted) {
                  toDelete();
