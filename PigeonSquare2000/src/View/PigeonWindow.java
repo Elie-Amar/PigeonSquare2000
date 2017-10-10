@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
 import Controller.WindowCloser;
-import Model.*;
+import Model.Environnement;
 
 
 
@@ -59,7 +59,7 @@ public class PigeonWindow extends JFrame {
 		this.addMouseListener(new Controller(environnement));
 		this.addWindowListener(new WindowCloser(this));
 		this.environnement.StartPigeonThread();
-		Timer timer = new Timer(30, action -> {
+		Timer timer = new Timer(10, action -> {
 					this.repaint();
 				});
 		timer.start();
