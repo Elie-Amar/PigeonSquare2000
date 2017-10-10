@@ -191,7 +191,18 @@ public class Environnement extends Observable {
     	int probability = Random(5);
     	//System.out.println(occurence + " " + probability);	
     	 if(occurence<probability)    	
-    		humans.add(new Human(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())),new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p()) )));
+    		humans.add(
+    				new Human(
+    						new Position(
+    								Random(PigeonWindow.getWidth_p()),
+    								Random(PigeonWindow.getHeight_p())
+    								),
+    						new Position(
+									Random(PigeonWindow.getWidth_p()),
+									Random(PigeonWindow.getHeight_p())
+									)
+    						)
+    				oogel);
     	
     	
     	

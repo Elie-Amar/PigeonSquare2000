@@ -24,26 +24,26 @@ public class Position implements Comparable<Position>{
          positionHandler(size);
      }    
 
-     private Position positionHandler(int width, int height)
+     public Position positionHandler(double width, double height)
      {
-    	 int eastLimit = PigeonWindow.getWidth_p() - PigeonWindow.border;
-    	 int southLimit = PigeonWindow.getHeight_p() - PigeonWindow.border - height;
-    	 int westLimit = PigeonWindow.border + width;
-    	 int northLimit = PigeonWindow.border + height; 
+    	 double eastLimit = PigeonWindow.getWidth_p() - PigeonWindow.border;
+    	 double southLimit = PigeonWindow.getHeight_p() - PigeonWindow.border;
+    	 double westLimit = PigeonWindow.border;
+    	 double northLimit = PigeonWindow.border; 
     	 
          if (this.x + width > eastLimit)
          {
-             this.x = PigeonWindow.getWidth_p() - width;
+             this.x = PigeonWindow.getWidth_p() - PigeonWindow.border - width;
          }
-         if (this.y + height > southLimit)
+         if (this.y + height*1.5 > southLimit)
          {
-             this.y = PigeonWindow.getHeight_p() - height - height/2;
+             this.y = PigeonWindow.getHeight_p() - PigeonWindow.border - 1.5*height;
          }
-         if(this.x + width/2 < westLimit) {
-        	 this.x = width/2;
+         if(this.x - width/2 < westLimit) {
+        	 this.x = PigeonWindow.border + width/2;
          }
-         if(this.y + height/2 < northLimit) {
-        	 this.y = height/2;
+         if(this.y - height/2 < northLimit) {
+        	 this.y = PigeonWindow.border + height/2;
          }
          return new Position(x,y);
      }

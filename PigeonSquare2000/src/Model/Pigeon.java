@@ -52,7 +52,16 @@ public class Pigeon implements Runnable
             this.refreshTime = 4;
             this.number = number;
             //Console.WriteLine("Pigeon created at " + position.x + " " + position.y);
-            
+        }
+        
+        //only for debug
+        public Pigeon(Position _position) {
+        	this.size = new Size(image.getIconWidth(), image.getIconHeight());
+            this.position = _position.positionHandler(size);
+            isAfraid = false;          
+            Alive = true;
+            changeAngle = true;
+            hasLaunchedTimer = false;
         }
 
        
@@ -107,8 +116,8 @@ public class Pigeon implements Runnable
             double nextY = MAX_STEP_MOVE * Math.sin(angle);
             
             this.position.x += nextX;
-            this.position.y += nextY;           
-        
+            this.position.y += nextY; 
+            this.position =  this.position.positionHandler(size);        
     		
         }	
    
@@ -119,7 +128,7 @@ public class Pigeon implements Runnable
 					hasLaunchedTimer = false;
 				});
         		hasLaunchedTimer = true;
-        		System.out.println("launched timer");
+        		//System.out.println("launched timer");
         		timer.start();
         	}
             if(!changeAngle) {
@@ -132,18 +141,22 @@ public class Pigeon implements Runnable
                 angle += randomAngle;
                 previousAngle = angle;
                 changeAngle = false;
-                System.out.println("final angle = " + angle);
+                //System.out.println("final angle = " + angle);
             }
             //System.out.println("final angle = " + angle);
             this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
-           //this.position =  this.position.positionHandler(size);
+            this.position =  this.position.positionHandler(size);
         }
                 
         
         public Position getPosition()
         {
         	return position;
+        }
+        
+        public Size getSize() {
+        	return size;
         }
 
         public static Image getImage() 
