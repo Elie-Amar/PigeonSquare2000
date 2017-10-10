@@ -2,7 +2,7 @@ package Helper;
 
 import static java.lang.Math.*;
 
-public class Maths {
+public class Coord {
 
 	
 	 public static double computeDistance(Position start, Position end)

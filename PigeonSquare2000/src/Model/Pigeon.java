@@ -6,7 +6,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import Helper.Maths;
+import Helper.Coord;
 import Helper.Position;
 import Helper.Size;
 
@@ -71,7 +71,7 @@ public class Pigeon implements Runnable
 	    				//MoveToFood();
 	    				move();    				
 	    				
-	    				if (Maths.computeDistance(position, targetFood.getPosition()) < 1) 
+	    				if (Coord.computeDistance(position, targetFood.getPosition()) < 5) 
 	    					 this.environnement.eatFood(targetFood);       			             
 	    			}
             	}
@@ -102,7 +102,8 @@ public class Pigeon implements Runnable
             this.angle = Maths.computeAngle(this.position, targetFood.getPosition());
             this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
-        }
+            this.position =  this.position.positionHandler(size);
+        }	
    
         private void runAway(){
         	if(!hasLaunchedTimer && !changeAngle) {
@@ -130,8 +131,7 @@ public class Pigeon implements Runnable
             this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
             this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
         }
-        
-        
+                
         
         public Position getPosition()
         {

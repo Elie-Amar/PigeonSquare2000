@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
  
 import Helper.Position;
+import Helper.Size;
  
 public class Food {
    
@@ -18,11 +19,12 @@ public class Food {
      private int height;
      static ImageIcon fresh =  new ImageIcon("assets/food_60.png");
      static ImageIcon rotten = new ImageIcon("assets/rottenness_60.png");
+     private Size size;
    
  
      public Food(Position _position)
      {
-         this.position = _position;        
+    	 this.position = _position;
          this.toBeDeleted = false;
          this.isFresh = true;
          this.width = fresh.getIconWidth();
