@@ -84,12 +84,9 @@ public class Environnement extends Observable {
     
     
     public Food getNearestFood(Pigeon p) {
-		
-    	Food food = null;
-		 
-    double min = Double.POSITIVE_INFINITY;
-         
-      foodLock.readLock().lock();
+	    Food food = null;
+	    double min = Double.POSITIVE_INFINITY;
+	    foodLock.readLock().lock();
 		try {
 			for (Food f : foods) {
 				double dist = Maths.computeDistance(p.getPosition(), f.getPosition());
@@ -101,15 +98,33 @@ public class Environnement extends Observable {
 		} finally {
 			foodLock.readLock().unlock();
 		}          
-         
-         return food;   
-		
-		
+        return food;  		
 	}
     
-   
-		
-	
+    public void destroyFoods() {
+    	ArrayList<Food> foodToRemove = new ArrayList<Food>();
+    	 foodLock.readLock().lock();
+ 		try {
+	    	for(Food f : foods) {
+	    		if(f.needsToBeDeleted()) {
+	    			foodToRemove.add(f); 
+	    		}
+	    	}
+ 		}
+ 		 finally {
+ 			foodLock.readLock().unlock();
+ 		}      
+ 		
+ 		//Suppression de toutes les nourriture pourries
+ 		
+ 		 foodLock.writeLock().lock();
+  		try {
+ 	    	foods.removeAll(foodToRemove);
+  		}
+  		 finally {
+  			foodLock.writeLock().unlock();
+  		}      
+    }	
 
 	
 	

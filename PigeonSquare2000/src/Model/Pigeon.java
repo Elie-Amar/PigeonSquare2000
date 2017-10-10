@@ -49,7 +49,7 @@ public class Pigeon implements Runnable
         
             while (this.Alive)
             { 
-            	System.out.println(number);
+            	//System.out.println(number);
             	
     			this.targetFood = this.environnement.getNearestFood(this);
 
