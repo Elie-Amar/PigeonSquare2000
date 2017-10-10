@@ -3,21 +3,21 @@ import View.PigeonWindow;
 import static java.lang.Math.*;
 
 public class Position implements Comparable<Position>{
-	 public int x, y;
+	 public double x, y;
      public Position(Position p)
      {
          this.x = p.x;
          this.y = p.y;
      }
 
-     public Position(int _x, int _y)
+     public Position(double _x, double _y)
      {
          this.x = _x;
          this.y = _y;
      }
      
 
-     public Position(int _x, int _y, Size size)
+     public Position(double _x, double _y, Size size)
      {
          this.x = _x;
          this.y = _y;
@@ -52,6 +52,21 @@ public class Position implements Comparable<Position>{
      {
         return positionHandler(size.width, size.height);
      }
+     
+     public double getX() {
+     	return x;
+      }
+      public double getY() {
+      	return y;
+       }
+      
+      
+      public int getXInt() {
+      	return (int)x;
+       }
+       public int getYInt(){
+       	return (int)y;
+        }
      
      public boolean equals(Position p) 
      { 		 		
