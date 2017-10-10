@@ -101,7 +101,7 @@ public class Pigeon implements Runnable
         }	
    
         private void runAway(){
-        	double angle = changeAngle();
+        	 double angle = changeAngle();
         	 this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
              this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
              this.position =  this.position.positionHandler(size);
