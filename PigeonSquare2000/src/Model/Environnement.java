@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Environnement extends Observable {
 
-	 int pigeonNumber = 5;
+	 int pigeonNumber = 6;
 	 private ArrayList<Food> foods;
 	 private ArrayList<Pigeon> pigeons;
 	 private Random random = new Random();
@@ -31,21 +31,30 @@ public class Environnement extends Observable {
     	 this.pigeons =  new ArrayList<>();
          for (int i = 0; i < pigeonNumber; i++)
          {             
-        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p()))));            
+        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())), this, i));            
          }
-         
+        
      }
      public void addFood(Food food)
      {
-    	 foods.add(food);
-     }
+    	 Environnement.foodLock.writeLock().lock();
+ 		try {
+ 			this.foods.add(food);
+ 		} finally {
+ 			Environnement.foodLock.writeLock().unlock();
+ 		}
+
+    	
+     }     
      
-     public synchronized void drawFood(Position p)
-     {
-         Food new_food = new Food(p);
-         foods.add(new_food);        
+     public void StartPigeonThread() {
+    		for(Pigeon p : pigeons) 
+    		{		
+    			Thread t = new Thread(p);				
+    			t.start();
+    		}
      }
-		
+   		
 	public void addPigeon(Pigeon pigeon)
 	{
 		pigeons.add(pigeon);
@@ -73,7 +82,32 @@ public class Environnement extends Observable {
 		}
 	}
     
- 		
+    
+    public Food getNearestFood(Pigeon p) {
+		
+    	Food food = null;
+		 
+    double min = Double.POSITIVE_INFINITY;
+         
+      foodLock.readLock().lock();
+		try {
+			for (Food f : foods) {
+				double dist = Maths.computeDistance(p.getPosition(), f.getPosition());
+				if (dist < min && f.Fresh()) {
+					min = dist;
+					food = f;
+				}
+			}
+		} finally {
+			foodLock.readLock().unlock();
+		}          
+         
+         return food;   
+		
+		
+	}
+    
+   
 		
 	
 

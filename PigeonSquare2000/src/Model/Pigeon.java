@@ -9,56 +9,66 @@ import java.awt.Image;
 
 public class Pigeon implements Runnable
     {
-        private boolean isHungry;
-        private Position position;
-        private boolean isAfraid;
-      //  private Size size = new Size(PigeonFeed.Properties.Resources.pigeon.Width, PigeonFeed.Properties.Resources.pigeon.Height);
-        private boolean Alive;
-        private Food targetFood;
-        private Thread thread;
-        private Size size;
-        public static ImageIcon image =  new ImageIcon("assets/pigeon_80.png");
+	  private boolean isHungry;
+      private Position position;
+      private boolean isAfraid;
+      private boolean Alive;
+      private Food targetFood;
+      private Size size;
+      public static ImageIcon image =  new ImageIcon("assets/pigeon_80.png");
+      private Environnement environnement;
+      private static final double MAX_STEP_MOVE = 0.5;
+      double angle =0;
+      private int refreshTime;
+      int number;
+      
         
         public Pigeon()
         {
 
         }
 
-        public Pigeon(Position _position)
+        public Pigeon(Position _position, Environnement _environnement, int number)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
-        	System.out.println("p:" +  image.getIconWidth() + " " + image.getIconHeight());
             this.position = _position.positionHandler(size);  
         	//this.position = _position;
             isAfraid = false;
             isHungry = true;
             Alive = true;
+            this.environnement = _environnement;
+            this.refreshTime = (int) (1. / 25. * 100.);
+            this.number = number;
             //Console.WriteLine("Pigeon created at " + position.x + " " + position.y);
             
         }
 
-        public void Start()
-        {
-          
-        }
-
+       
         @Override
         public void run()
         {
-         //   Console.WriteLine("Pigeon thread starts");
+        
             while (this.Alive)
-            {
-                if (!isAfraid)
-                {
-                    //if(isThereFood())
-                      //     chooseFood();
-                    if (targetFood != null)
-                        MoveToFood();
-                    
-                }
-                else
-                    runAway();
-                
+            { 
+            	System.out.print(number);
+            	
+    			this.targetFood = this.environnement.getNearestFood(this);
+
+    			if (targetFood != null) 
+    			{    				    				
+    				//MoveToFood();
+    				move();    				
+    				
+    				if (Maths.computeDistance(position, targetFood.getPosition()) < 1) 
+    					 this.environnement.eatFood(targetFood);       			
+    			                
+    			}
+    			try {
+    				Thread.sleep(refreshTime);
+    			} catch (InterruptedException e) {
+    				e.printStackTrace();
+    			}
+
             }
         }
         
@@ -68,49 +78,12 @@ public class Pigeon implements Runnable
 
         }
 
-      
-     
-     /*   private Food chooseFood()
-        {
-            float best_dist = 1000;
-            float tmp_dist;
-
-            
-            for(Food f : Environnement.foodList)
-            {
-            	    tmp_dist = Math.computeDistance(position, f.getPosition());
-                     if (best_dist > tmp_dist)
-                     {
-                         best_dist = tmp_dist;
-                         targetFood = f;
-                     }
-                 
-            }                
-            
-            return null;            
-        }*/
-              
-
-        private void MoveToFood()
-        {
-            position = targetFood.getPosition();
+        private void move(){
+            angle = Maths.computeAngle(this.position, targetFood.getPosition());
+            this.position.x +=  MAX_STEP_MOVE * Math.cos(angle);
+            this.position.y +=  MAX_STEP_MOVE * Math.sin(angle); 
         }
-
-        private void resetState()
-        {
-            //x_dest = x;
-            //y_dest = y;
-            //angle = 0.0f;
-            targetFood = null;
-            isAfraid = false;
-        }
-
-        private void eat()
-        {
-            targetFood.eaten();
-            //resetState();
-        }
-        
+   
         public Position getPosition()
         {
         	return position;
