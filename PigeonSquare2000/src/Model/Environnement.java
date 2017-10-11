@@ -19,6 +19,8 @@ public class Environnement extends Observable {
 	 private Random random = new Random();
 	 public static final ReadWriteLock foodLock = new ReentrantReadWriteLock(true); 
 	 public static final ReadWriteLock HumanLock = new ReentrantReadWriteLock(true); 
+	 public static final ReadWriteLock collision = new ReentrantReadWriteLock(true); 
+		
 	
 		
 	 
@@ -218,19 +220,23 @@ public class Environnement extends Observable {
     	
     	 HumanLock.readLock().lock();
     	 try {
-	    	 for(Human human : humans)
-	    	 {
-	    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
-					if (dist < 300) {
-						return true;
-					}
-	 	     } 		  		  
+    		
+		    	 for(Human human : humans)
+		    	 {
+		    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());
+						if (dist < 300) {
+							return true;
+						}
+		 	     } 		  		  
+    		 
     	 } finally {
   	    	HumanLock.readLock().unlock();
   		}  
     	
     	return false;                 
     }
+    
+   
     
 	
 }

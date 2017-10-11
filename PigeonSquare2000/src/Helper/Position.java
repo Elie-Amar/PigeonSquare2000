@@ -77,10 +77,11 @@ public class Position implements Comparable<Position>{
      
      public boolean equals(Position p) 
      { 		 		
-    	 return this.x == p.x && this.y == p.y; 		
+    	 return this.getXInt() == p.getXInt() && this.getYInt() == p.getYInt(); 		
  		
  	}
     
+     
 
 	@Override
 	public int compareTo(Position p) {

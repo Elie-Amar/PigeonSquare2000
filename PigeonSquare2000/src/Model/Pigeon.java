@@ -7,10 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import Helper.Coord;
-import Helper.HitBox;
 import Helper.Position;
 import Helper.Size;
 import View.PigeonWindow;
+
 
 
 public class Pigeon implements Runnable
@@ -29,9 +29,8 @@ public class Pigeon implements Runnable
       private int refreshTime;
       private int number;      
       private double angle;
-      private double previousAngle;
-      private HitBox hitbox;
-      
+      private double previousAngle;     
+      Random random; 
         
         public Pigeon()
         {
@@ -41,9 +40,7 @@ public class Pigeon implements Runnable
         public Pigeon(Position _position, Environnement _environnement, int number)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
-            this.position = _position.positionHandler(size);
-            this.hitbox = new HitBox(position, size);
-        	//this.position = _position;
+            this.position = _position.positionHandler(size);                 	
             isAfraid = false;          
             Alive = true;
             changeAngle = true;
@@ -51,13 +48,15 @@ public class Pigeon implements Runnable
             this.environnement = _environnement;
             this.refreshTime = 4;
             this.number = number;
-            //Console.WriteLine("Pigeon created at " + position.x + " " + position.y);
+            random = new Random();
+          
         }
         
         //only for debug
         public Pigeon(Position _position) {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
             this.position = _position.positionHandler(size);
+          
             isAfraid = false;          
             Alive = true;
             changeAngle = true;
@@ -80,7 +79,8 @@ public class Pigeon implements Runnable
             		if (targetFood != null) 
 	    			{    				    				
 	    				//MoveToFood();
-	    				move();    				
+            			
+            				move();    				
 	    				
 	    				if (Coord.computeDistance(position, targetFood.getPosition()) < 5) 
 	    					 this.environnement.eatFood(targetFood);       			             
@@ -112,14 +112,18 @@ public class Pigeon implements Runnable
 
         private void move(){
             this.angle = Coord.computeAngle(this.position, targetFood.getPosition());
-            double nextX = MAX_STEP_MOVE * Math.cos(angle);
-            double nextY = MAX_STEP_MOVE * Math.sin(angle);
+            double nextX = this.position.getX() + MAX_STEP_MOVE * Math.cos(angle);
+            double nextY = this.position.getY() + MAX_STEP_MOVE * Math.sin(angle);
             
-            this.position.x += nextX;
-            this.position.y += nextY; 
-            this.position =  this.position.positionHandler(size);        
-    		
+            this.position.x = nextX;
+            this.position.y = nextY; 
+            this.position =  this.position.positionHandler(size);     
+          
+          
         }	
+           
+        
+        
    
         private void runAway(){
         	if(!hasLaunchedTimer && !changeAngle) {
@@ -141,12 +145,16 @@ public class Pigeon implements Runnable
                 angle += randomAngle;
                 previousAngle = angle;
                 changeAngle = false;
-                //System.out.println("final angle = " + angle);
-            }
-            //System.out.println("final angle = " + angle);
-            this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
-            this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
-            this.position =  this.position.positionHandler(size);
+              
+            }       
+                        
+            
+	            this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
+	            this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
+	            this.position =  this.position.positionHandler(size);
+	            
+            
+           
         }
                 
         
@@ -163,7 +171,10 @@ public class Pigeon implements Runnable
         {
        	 	return image.getImage();
         }
-
+        
+        
+        
+       
        
     }
 

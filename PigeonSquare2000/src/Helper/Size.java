@@ -15,4 +15,10 @@ public class Size {
     	 this.width = _w;
     	 this.height = _h;
      }
+     
+     public boolean equals(Size s) 
+     { 		 		
+    	 return this.width == s.width && this.height == s.height; 		
+ 		
+ 	}
 }
