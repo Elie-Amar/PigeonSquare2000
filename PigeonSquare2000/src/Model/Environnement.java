@@ -36,7 +36,7 @@ public class Environnement extends Observable {
     	 this.humans =  new ArrayList<>();
          for (int i = 0; i < pigeonNumber; i++)
          {             
-        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())), this, i));            
+        	 addPigeon(new Pigeon(new Position(Random(PigeonWindow.getWidth_p()),Random(PigeonWindow.getHeight_p())), this));            
          }
          
      }
@@ -135,7 +135,7 @@ public class Environnement extends Observable {
     
     public void clean() {
     	
-    	//Nourriture
+    	//Food
     	ArrayList<Food> foodToRemove = new ArrayList<Food>();
     	 foodLock.readLock().lock();
  		try {
@@ -149,7 +149,7 @@ public class Environnement extends Observable {
  			foodLock.readLock().unlock();
  		}      
  		
- 		//Suppression de toutes les nourriture pourries
+ 		//Delete not fresh food
  		
  		 foodLock.writeLock().lock();
   		try {
@@ -190,8 +190,7 @@ public class Environnement extends Observable {
     public void generateHuman() {
     	//Créer un nombre aléatoire    	
     	int occurence = Random(1000);
-    	int probability = Random(5);
-    	//System.out.println(occurence + " " + probability);	
+    	int probability = Random(5);    	
     	 if(occurence<probability)    	
     		humans.add(
     				new Human(
@@ -206,9 +205,6 @@ public class Environnement extends Observable {
     						)
     				);
     	
-    	
-    	
-    	//Thread.sleep(10000 / speed); //10s/speed to avoid afraid bool to change to frequently
     	                   
     }
     
@@ -219,8 +215,7 @@ public class Environnement extends Observable {
     public boolean closeToHuman(Pigeon p) {  
     	
     	 HumanLock.readLock().lock();
-    	 try {
-    		
+    	 try {    		
 		    	 for(Human human : humans)
 		    	 {
 		    		 double dist = Coord.computeDistance(p.getPosition(), human.getPosition());

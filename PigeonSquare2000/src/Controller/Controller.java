@@ -22,22 +22,11 @@ public class Controller extends MouseAdapter  {
 		super.mousePressed(e);
 		int x = e.getX() - 12;
 		int y = e.getY() - 52;
-		System.out.println("e: " + x + " " + y);
-
+		//System.out.println("e: " + x + " " + y);
 		if(SwingUtilities.isLeftMouseButton(e)) {
 			Food f = new Food(new Position(x, y));
 			environnement.addFood(f);
 		}		
 		
-		if(SwingUtilities.isMiddleMouseButton(e)) {
-			Pigeon p = new Pigeon(new Position(x,y));
-			environnement.addPigeon(p);
-		}
-		
-
-		if(SwingUtilities.isRightMouseButton(e)) {
-			Human h = new Human(new Position(x, y));
-			environnement.addHuman(h);
-		}
 	}
 }

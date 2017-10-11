@@ -13,8 +13,6 @@ public class Drawings extends JPanel{
 	
 	Environnement environnement;	
 	
-	//int pigeonOffset = 80;
-	//int foodOffset = 60;
 	public Drawings(Environnement _environnement) {
 		this.environnement = _environnement;		
 	}
@@ -50,8 +48,7 @@ public class Drawings extends JPanel{
 		
 		for (Human human : this.environnement.getHuman()) {	
 			int x = human.getPosition().getXInt() - human.getSize().width/2;
-		    int y = human.getPosition().getYInt() - human.getSize().height/2;
-		    //System.out.println("human :" + human.getSize().width/2 + " " + human.getSize().height/2);
+		    int y = human.getPosition().getYInt() - human.getSize().height/2;		    
 		    g.drawImage(human.getImage(),x, y, this);
 		}
 	}

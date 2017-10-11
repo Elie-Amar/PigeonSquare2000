@@ -26,18 +26,12 @@ public class Pigeon implements Runnable
       public static ImageIcon image =  new ImageIcon("assets/pigeon_80.png");
       private Environnement environnement;
       private static final double MAX_STEP_MOVE = 0.5;      
-      private int refreshTime;
-      private int number;      
+      private int refreshTime;         
       private double angle;
-      private double previousAngle;     
+      private double previousAngle;       
       Random random; 
         
-        public Pigeon()
-        {
-
-        }
-
-        public Pigeon(Position _position, Environnement _environnement, int number)
+        public Pigeon(Position _position, Environnement _environnement)
         {
         	this.size = new Size(image.getIconWidth(), image.getIconHeight());
             this.position = _position.positionHandler(size);                 	
@@ -46,22 +40,11 @@ public class Pigeon implements Runnable
             changeAngle = true;
             hasLaunchedTimer = false;
             this.environnement = _environnement;
-            this.refreshTime = 4;
-            this.number = number;
+            this.refreshTime = 4;          
             random = new Random();
           
-        }
-        
-        //only for debug
-        public Pigeon(Position _position) {
-        	this.size = new Size(image.getIconWidth(), image.getIconHeight());
-            this.position = _position.positionHandler(size);
-          
-            isAfraid = false;          
-            Alive = true;
-            changeAngle = true;
-            hasLaunchedTimer = false;
-        }
+        }       
+       
 
        
         @Override
@@ -70,17 +53,14 @@ public class Pigeon implements Runnable
         
             while (this.Alive)
             { 
-            	//System.out.println(number);
-            	
+            	           	
             	if(!isAfraid()) {
             	
             		this.targetFood = this.environnement.getNearestFood(this);
 
             		if (targetFood != null) 
 	    			{    				    				
-	    				//MoveToFood();
-            			
-            				move();    				
+	    					move();    				
 	    				
 	    				if (Coord.computeDistance(position, targetFood.getPosition()) < 5) 
 	    					 this.environnement.eatFood(targetFood);       			             
@@ -113,17 +93,12 @@ public class Pigeon implements Runnable
         private void move(){
             this.angle = Coord.computeAngle(this.position, targetFood.getPosition());
             double nextX = this.position.getX() + MAX_STEP_MOVE * Math.cos(angle);
-            double nextY = this.position.getY() + MAX_STEP_MOVE * Math.sin(angle);
-            
+            double nextY = this.position.getY() + MAX_STEP_MOVE * Math.sin(angle);            
             this.position.x = nextX;
             this.position.y = nextY; 
-            this.position =  this.position.positionHandler(size);     
-          
+            this.position =  this.position.positionHandler(size);              
           
         }	
-           
-        
-        
    
         private void runAway(){
         	if(!hasLaunchedTimer && !changeAngle) {
@@ -139,22 +114,17 @@ public class Pigeon implements Runnable
             	angle = previousAngle;
             }
             else {
-            	angle = Coord.computeAngle(this.position, antiTargetHuman.getPosition());
-            	Random random = new Random();
+            	angle = Coord.computeAngle(this.position, antiTargetHuman.getPosition());            	
             	double randomAngle = ((double)random.nextInt(157) / 100) - 0.78;
                 angle += randomAngle;
                 previousAngle = angle;
                 changeAngle = false;
               
-            }       
-                        
+            }                              
             
 	            this.position.x -=  MAX_STEP_MOVE * Math.cos(angle);
 	            this.position.y -=  MAX_STEP_MOVE * Math.sin(angle); 
-	            this.position =  this.position.positionHandler(size);
-	            
-            
-           
+	            this.position =  this.position.positionHandler(size);             
         }
                 
         

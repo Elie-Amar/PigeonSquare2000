@@ -2,7 +2,7 @@ package Helper;
 import View.PigeonWindow;
 import static java.lang.Math.*;
 
-public class Position implements Comparable<Position>{
+public class Position{
 	 public double x, y;
      public Position(Position p)
      {
@@ -79,23 +79,7 @@ public class Position implements Comparable<Position>{
      { 		 		
     	 return this.getXInt() == p.getXInt() && this.getYInt() == p.getYInt(); 		
  		
- 	}
-    
+ 	}   
      
 
-	@Override
-	public int compareTo(Position p) {
-		if (this.x == p.x && this.y == p.y) {
-			return 0;
-		} else {
-			double d1 = sqrt(pow(this.x, 2) + pow(this.y, 2));
-			double d2 = sqrt(pow(p.x, 2) + pow(p.y, 2));
-
-			if (d1 > d2) {
-				return 1;
-			} else {
-				return -1;
-			}
-		}
-	}
 }

@@ -14,9 +14,7 @@ public class Food {
    
      private Position position;
      private boolean isFresh;
-     private boolean toBeDeleted;
-     private int width;
-     private int height;
+     private boolean toBeDeleted;     
      static ImageIcon fresh =  new ImageIcon("assets/food_60.png");
      static ImageIcon rotten = new ImageIcon("assets/rottenness_60.png");
      private Size size;
@@ -37,15 +35,7 @@ public class Food {
     timer1.start();
      }
      
-     public Food()
-     {        
-         this.toBeDeleted = false;
-         this.isFresh = true;
-         this.width = fresh.getIconWidth();
-         this.height = fresh.getIconHeight();      
-     }
- 
- 
+     
      public boolean Fresh()
      {
          return isFresh;
